@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
+
+:root {
+  --bria-blue: #3F69AF;
+  --dark-blue: #1C2942;
+  --bria-yellow: #F5BC36;
+  --light-gray: #F3F5F8;
+  --white: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--dark-blue);
+  color: var(--white);
+  overflow: hidden; /* Hide scrollbars for presentation */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(28, 41, 66, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.glass-light {
+  background: rgba(243, 245, 248, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(63, 105, 175, 0.2);
+  border-radius: 16px;
+  color: var(--dark-blue);
+}
+
+.slide-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.slide-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(28, 41, 66, 0.9) 0%, rgba(28, 41, 66, 0.5) 100%);
+  z-index: 0;
+}
+
+.content-z {
+  z-index: 1;
+  width: 100%;
+  max-width: 1400px;
+  padding: 4rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-corner {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  height: 40px;
+  z-index: 10;
+}
+.logo-corner img {
+  height: 100%;
+  object-fit: contain;
+  /* if we want it white, we could use CSS filters, but logo is image */
+}
+
+/* Typography */
+h1 {
+  font-weight: 800;
+  font-size: 4rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+h2 {
+  font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: var(--bria-yellow);
+}
+h3 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+p {
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: var(--bria-yellow);
+}
+.highlight-blue {
+  color: var(--bria-blue);
+}
+
+/* Presentation controls */
+.controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  gap: 10px;
+}
+.controls button {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.controls button:hover {
+  background: var(--bria-blue);
+}
