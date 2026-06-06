@@ -61,9 +61,30 @@ const itemVariant = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
+function useWindowScale() {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const scaleX = width / 1920;
+      const scaleY = height / 1080;
+      setScale(Math.min(scaleX, scaleY));
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return scale;
+}
+
 export default function App() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
+  const scale = useWindowScale();
 
   const slides = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, Slide9, Slide10];
 
@@ -94,32 +115,36 @@ export default function App() {
   const CurrentSlideComponent = slides[current];
 
   return (
-    <div className="slide-container">
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.div
-          key={current}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 }
-          }}
-          style={{ position: 'absolute', width: '100%', height: '100%' }}
-        >
-          <CurrentSlideComponent />
-        </motion.div>
-      </AnimatePresence>
+    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#000', overflow: 'hidden' }}>
+      <div style={{ width: 1920, height: 1080, transform: `scale(${scale})`, transformOrigin: 'center center', position: 'relative' }}>
+        <div className="slide-container">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={current}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 }
+              }}
+              style={{ position: 'absolute', width: '100%', height: '100%' }}
+            >
+              <CurrentSlideComponent />
+            </motion.div>
+          </AnimatePresence>
 
-      <div className="controls">
-        <button onClick={prevSlide} disabled={current === 0}>
-          <ChevronLeft />
-        </button>
-        <button onClick={nextSlide} disabled={current === slides.length - 1}>
-          <ChevronRight />
-        </button>
+          <div className="controls">
+            <button onClick={prevSlide} disabled={current === 0}>
+              <ChevronLeft />
+            </button>
+            <button onClick={nextSlide} disabled={current === slides.length - 1}>
+              <ChevronRight />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
