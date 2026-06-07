@@ -82,6 +82,8 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  transform: scale(0.8);
+  transform-origin: center center;
 }
 
 .logo-corner {
