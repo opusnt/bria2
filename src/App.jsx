@@ -115,36 +115,32 @@ export default function App() {
   const CurrentSlideComponent = slides[current];
 
   return (
-    <div style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#000', overflow: 'hidden' }}>
-      <div style={{ width: 1920, height: 1080, transform: `scale(${scale})`, transformOrigin: 'center center', position: 'relative', overflow: 'hidden' }}>
-        <div className="slide-container">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 }
-              }}
-              style={{ position: 'absolute', width: '100%', height: '100%' }}
-            >
-              <CurrentSlideComponent />
-            </motion.div>
-          </AnimatePresence>
+    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', '--app-scale': scale }}>
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={current}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.2 }
+          }}
+          style={{ position: 'absolute', width: '100%', height: '100%' }}
+        >
+          <CurrentSlideComponent />
+        </motion.div>
+      </AnimatePresence>
 
-          <div className="controls">
-            <button onClick={prevSlide} disabled={current === 0}>
-              <ChevronLeft />
-            </button>
-            <button onClick={nextSlide} disabled={current === slides.length - 1}>
-              <ChevronRight />
-            </button>
-          </div>
-        </div>
+      <div className="controls">
+        <button onClick={prevSlide} disabled={current === 0}>
+          <ChevronLeft />
+        </button>
+        <button onClick={nextSlide} disabled={current === slides.length - 1}>
+          <ChevronRight />
+        </button>
       </div>
     </div>
   );
